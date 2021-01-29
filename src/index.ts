@@ -1,7 +1,11 @@
 import express,{Application} from "express";
+import mongoose from "mongoose";
+require('dotenv').config()
 
 class Server {
     public app: Application
+    public host = process.env.DB_HOST;
+    public database = process.env.DB_NAME
 
     constructor() {
         this.app = express();
@@ -23,7 +27,17 @@ class Server {
             console.log("Server run on http://localhost:" + this.app.get('port'))
         })
 
+        mongoose.connect(`mongodb://${this.host}/${this.database}`,
+            {useNewUrlParser: true, useUnifiedTopology: true}
+        ).then(() => {
+            console.log("Mongo Connected")
+        }).catch(err => {
+            console.log(err)
+        })
+
     }
 }
+
+
 const server = new Server();
 server.start();

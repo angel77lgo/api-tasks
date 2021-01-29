@@ -4,8 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var mongoose_1 = __importDefault(require("mongoose"));
+require('dotenv').config();
 var Server = /** @class */ (function () {
     function Server() {
+        this.host = process.env.DB_HOST;
+        this.database = process.env.DB_NAME;
         this.app = express_1.default();
         this.config();
         this.routes();
@@ -20,6 +24,11 @@ var Server = /** @class */ (function () {
         var _this = this;
         this.app.listen(this.app.get("port"), function () {
             console.log("Server run on http://localhost:" + _this.app.get('port'));
+        });
+        mongoose_1.default.connect("mongodb://" + this.host + "/" + this.database, { useNewUrlParser: true, useUnifiedTopology: true }).then(function () {
+            console.log("Mongo Connected");
+        }).catch(function (err) {
+            console.log(err);
         });
     };
     return Server;

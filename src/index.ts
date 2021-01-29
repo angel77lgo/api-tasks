@@ -1,5 +1,6 @@
 import express,{Application} from "express";
 import mongoose from "mongoose";
+import routes from "./routes/routes";
 require('dotenv').config()
 
 class Server {
@@ -14,19 +15,18 @@ class Server {
     }
 
     config(): void{
-        this.app.set('port', process.env.PORT || 3000);
+        this.app.set('port', process.env.PORT || 5000);
         this.app.use(express.json());
     }
 
     routes(): void{
-
+        this.app.use('/api', routes)
     }
 
     start(): void{
         this.app.listen(this.app.get("port"), () => {
             console.log("Server run on http://localhost:" + this.app.get('port'))
         })
-
         mongoose.connect(`mongodb://${this.host}/${this.database}`,
             {useNewUrlParser: true, useUnifiedTopology: true}
         ).then(() => {
@@ -34,7 +34,6 @@ class Server {
         }).catch(err => {
             console.log(err)
         })
-
     }
 }
 

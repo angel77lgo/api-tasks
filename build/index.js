@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
+var routes_1 = __importDefault(require("./routes/routes"));
 require('dotenv').config();
 var Server = /** @class */ (function () {
     function Server() {
@@ -15,10 +16,11 @@ var Server = /** @class */ (function () {
         this.routes();
     }
     Server.prototype.config = function () {
-        this.app.set('port', process.env.PORT || 3000);
+        this.app.set('port', process.env.PORT || 5000);
         this.app.use(express_1.default.json());
     };
     Server.prototype.routes = function () {
+        this.app.use('/api', routes_1.default);
     };
     Server.prototype.start = function () {
         var _this = this;

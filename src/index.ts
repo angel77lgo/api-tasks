@@ -28,7 +28,7 @@ class Server {
             console.log("Server run on http://localhost:" + this.app.get('port'))
         })
         mongoose.connect(`mongodb://${this.host}/${this.database}`,
-            {useNewUrlParser: true, useUnifiedTopology: true}
+            {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false}
         ).then(() => {
             console.log("Mongo Connected")
         }).catch(err => {

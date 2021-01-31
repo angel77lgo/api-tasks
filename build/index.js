@@ -27,7 +27,7 @@ var Server = /** @class */ (function () {
         this.app.listen(this.app.get("port"), function () {
             console.log("Server run on http://localhost:" + _this.app.get('port'));
         });
-        mongoose_1.default.connect("mongodb://" + this.host + "/" + this.database, { useNewUrlParser: true, useUnifiedTopology: true }).then(function () {
+        mongoose_1.default.connect("mongodb://" + this.host + "/" + this.database, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }).then(function () {
             console.log("Mongo Connected");
         }).catch(function (err) {
             console.log(err);

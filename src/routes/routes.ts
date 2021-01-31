@@ -12,6 +12,9 @@ class Routes {
         this.router.post("/task", TaskController.addTask)
         this.router.get("/task", TaskController.getTasks)
         this.router.get('/task/search', TaskController.searchTask)
+        this.router.post('/task/bulk',TaskController.bulkInsert)
+        this.router.put('/task/:id', TaskController.updateTask)
+        this.router.delete('/task/:id', TaskController.deleteTask)
     }
 }
 const routes = new Routes();

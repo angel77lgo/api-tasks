@@ -16,4 +16,4 @@ services:
     container_name: node-mongo
     image: mongo:latest
     ports:
-    - "27017:27017"
+    - "27018:27017"

@@ -1,0 +1,19 @@
+version: "2"
+services:
+  app:
+    container_name: project-api
+    image: project-api
+    build:
+      context: .
+    ports:
+    - "5000:5000"
+    env_file:
+      - .env.docker
+    depends_on:
+      - dbmongo
+
+  dbmongo:
+    container_name: node-mongo
+    image: mongo:latest
+    ports:
+    - "27017:27017"

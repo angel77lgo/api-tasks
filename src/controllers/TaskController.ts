@@ -26,6 +26,13 @@ class TaskController {
 
         let task = req.body;
 
+        if(Object.keys(task).length == 0){
+            res.status(400).json({
+                "message":"Body cannot be empty"
+            })
+            return
+        }
+
         console.log(task)
         try {
             let newTask = Task(task);
@@ -64,13 +71,20 @@ class TaskController {
             });
 
         }catch (e){
-            res.status(500)
+            res.status(500).json()
         }
     }
 
     async updateTask(req: Request, res: Response){
         let {id} = req.params;
         let new_task = req.body;
+
+        if(Object.keys(new_task).length == 0){
+            res.status(400).json({
+                "message":"Body cannot be empty"
+            })
+            return
+        }
 
        try {
            let task = await Task.findById(id)

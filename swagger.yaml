@@ -1,0 +1,108 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Task API Documentation"
+host: ${HOST}
+basePath: "/api"
+paths:
+  "/task/bulk":
+    post:
+      summary: 'Inserta 50 tareas aleatorias'
+      responses:
+        200:
+          description: 'A successful response'
+        500:
+          description: 'Internal Error'
+  "/task":
+    get:
+      summary: 'Trae todas las tareas, filtradas por completadas o incompletas'
+      parameters:
+        - in: query
+          name: status
+          type: boolean
+          required: true
+      responses:
+        200:
+          description: 'All Task'
+        500:
+          description: 'Internal Error'
+    post:
+      summary: 'Agrega una nueva tarea'
+      parameters:
+        - in: body
+          name: task
+          schema:
+            type: object
+            properties:
+              description:
+                type: string
+              duration:
+                type: integer
+              recordedTime:
+                type: integer
+              status:
+                type: boolean
+      responses:
+        200:
+          description: 'Task Added'
+        400:
+          description: 'Body cannot be empty'
+        500:
+          description: 'Internal Error'
+  "/task/search":
+    get:
+      summary: 'Busca tareas por descripción'
+      parameters:
+        - in: query
+          name: q
+          type: string
+          required: true
+      responses:
+        200:
+          description: 'A successful response'
+        500:
+          description: 'Internal Error'
+  "/task/{id}":
+    put:
+      summary: 'Actualiza tarea por id'
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+        - in: body
+          name: task
+          schema:
+            type: object
+            properties:
+              description:
+                type: string
+              duration:
+                type: integer
+              recordedTime:
+                type: integer
+              status:
+                type: boolean
+      responses:
+        200:
+          description: 'A successful response'
+        404:
+          description: 'Task Not Found'
+        400:
+          description: 'Body cannot be empty'
+        500:
+          description: 'Internal Error'
+    delete:
+      summary: 'Borrar tarea por id'
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+      responses:
+        200:
+          description: 'A successful response'
+        404:
+          description: 'Task Not Found'
+        500:
+          description: 'Internal Error'

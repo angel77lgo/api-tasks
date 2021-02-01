@@ -1,6 +1,11 @@
 import express,{Application} from "express";
 import mongoose from "mongoose";
 import routes from "./routes/routes";
+import * as fs from "fs";
+const yaml = require('js-yaml')
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = yaml.load(fs.readFileSync('swagger.yaml','utf-8'))
 require('dotenv').config()
 
 class Server {
@@ -17,6 +22,7 @@ class Server {
     config(): void{
         this.app.set('port', process.env.PORT || 5000);
         this.app.use(express.json());
+        this.app.use('/apidocs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     }
 
     routes(): void{

@@ -1,108 +1,138 @@
-swagger: "2.0"
+openapi: 3.0.1
 info:
-  version: "1.0.0"
-  title: "Task API Documentation"
-host: ${HOST}
-basePath: "/api"
+  title: Task API Documentation
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: "Server For Development And Docker"
+  - url: https://tasksapiproject-js.herokuapp.com/api
+    description: "Server For Production"
 paths:
-  "/task/bulk":
+  /task/bulk:
     post:
-      summary: 'Inserta 50 tareas aleatorias'
+      summary: Inserta 50 tareas aleatorias
       responses:
-        200:
-          description: 'A successful response'
+        201:
+          description: All Task Created
+          content: {}
         500:
-          description: 'Internal Error'
-  "/task":
+          description: Internal Error
+          content: {}
+  /task:
     get:
-      summary: 'Trae todas las tareas, filtradas por completadas o incompletas'
+      summary: Trae todas las tareas, filtradas por completadas o incompletas
       parameters:
-        - in: query
-          name: status
-          type: boolean
+        - name: status
+          in: query
           required: true
-      responses:
-        200:
-          description: 'All Task'
-        500:
-          description: 'Internal Error'
-    post:
-      summary: 'Agrega una nueva tarea'
-      parameters:
-        - in: body
-          name: task
           schema:
-            type: object
-            properties:
-              description:
-                type: string
-              duration:
-                type: integer
-              recordedTime:
-                type: integer
-              status:
-                type: boolean
+            type: boolean
       responses:
         200:
-          description: 'Task Added'
+          description: All Task
+          content: {}
+        500:
+          description: Internal Error
+          content: {}
+    post:
+      summary: Agrega una nueva tarea
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                duration:
+                  type: integer
+                recordedTime:
+                  type: integer
+                status:
+                  type: boolean
+        required: false
+      responses:
+        201:
+          description: Task Added
+          content: {}
         400:
-          description: 'Body cannot be empty'
+          description: Body cannot be empty
+          content: {}
         500:
-          description: 'Internal Error'
-  "/task/search":
+          description: Internal Error
+          content: {}
+      x-codegen-request-body-name: task
+  /task/search:
     get:
-      summary: 'Busca tareas por descripción'
+      summary: Busca tareas por descripción
       parameters:
-        - in: query
-          name: q
-          type: string
+        - name: q
+          in: query
           required: true
+          schema:
+            type: string
       responses:
         200:
-          description: 'A successful response'
+          description: A successful response
+          content: {}
         500:
-          description: 'Internal Error'
-  "/task/{id}":
+          description: Internal Error
+          content: {}
+  /task/{id}:
     put:
-      summary: 'Actualiza tarea por id'
+      summary: Actualiza tarea por id
       parameters:
-        - in: path
-          name: id
-          type: string
+        - name: id
+          in: path
           required: true
-        - in: body
-          name: task
           schema:
-            type: object
-            properties:
-              description:
-                type: string
-              duration:
-                type: integer
-              recordedTime:
-                type: integer
-              status:
-                type: boolean
+            type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                duration:
+                  type: integer
+                recordedTime:
+                  type: integer
+                status:
+                  type: boolean
+        required: false
       responses:
         200:
-          description: 'A successful response'
-        404:
-          description: 'Task Not Found'
+          description: A successful response
+          content: {}
         400:
-          description: 'Body cannot be empty'
+          description: Body cannot be empty
+          content: {}
+        404:
+          description: Task Not Found
+          content: {}
         500:
-          description: 'Internal Error'
+          description: Internal Error
+          content: {}
+      x-codegen-request-body-name: task
     delete:
-      summary: 'Borrar tarea por id'
+      summary: Borrar tarea por id
       parameters:
-        - in: path
-          name: id
-          type: string
+        - name: id
+          in: path
           required: true
+          schema:
+            type: string
       responses:
         200:
-          description: 'A successful response'
+          description: A successful response
+          content: {}
         404:
-          description: 'Task Not Found'
+          description: Task Not Found
+          content: {}
         500:
-          description: 'Internal Error'
+          description: Internal Error
+          content: {}
+components: {}
+
